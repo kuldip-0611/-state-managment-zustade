@@ -1,6 +1,7 @@
 import { Typography, Container, Button, Grid, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
+import useStore from './redux/store/store';
 
 const containerStyle = {
   minHeight: '100vh',
@@ -20,20 +21,26 @@ const PrimaryButton = styled(Button)(({ theme }) => ({
 }));
 
 const Counter = (props) => {
+  const counter = useStore(state=>state.counter)
+  const increaseCounter = useStore(state=>state.increaseCounter)
+  const decreaseCounter = useStore(state=>state.decreaseCounter)
+  const increseBy = useStore(state=>state.increaseBy);
+  const decreaseBy = useStore(state=>state.decreaseBy);
+  const reset = useStore(state=>state.reset)
   return (
     <Container sx={containerStyle}>
-      <Typography>10</Typography>
+      <Typography>{counter}</Typography>
       <Stack spacing={2}>
         <Stack spacing={2} direction="row">
-          <PrimaryButton>+</PrimaryButton>
-          <PrimaryButton>increase by 10</PrimaryButton>
+          <PrimaryButton onClick={increaseCounter}>+</PrimaryButton>
+          <PrimaryButton onClick={()=>increseBy(10)}>increase by 10</PrimaryButton>
         </Stack>
 
         <Stack spacing={2} direction="row">
-          <PrimaryButton>-</PrimaryButton>
-          <PrimaryButton>decrease by 10</PrimaryButton>
+          <PrimaryButton onClick={decreaseCounter}>-</PrimaryButton>
+          <PrimaryButton onClick={()=>decreaseBy(10)}>decrease by 10</PrimaryButton>
         </Stack>
-        <PrimaryButton>reset counter</PrimaryButton>
+        <PrimaryButton onClick={reset}>reset counter</PrimaryButton>
       </Stack>
     </Container>
   );
